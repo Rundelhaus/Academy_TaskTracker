@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Column;
+use App\Models\Project;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
@@ -29,7 +30,7 @@ class ColumnController extends Controller
      * @param Request $request
      * @return JsonResponse|Response|object
      */
-    public function store(Request $request)
+    public function store(Request $request, $project_id)
     {
         $validator = Validator::make($request->all(), [
             'column_name' => 'required|string',
@@ -41,6 +42,7 @@ class ColumnController extends Controller
 
         $column = Column::create([
             'name' => $request->column_name,
+            'project_id' => $project_id
         ]);
         return response()->json($column)->setStatusCode(200, 'Successful task list creation');
     }
@@ -64,18 +66,17 @@ class ColumnController extends Controller
      * @param Column $column
      * @return Application|ResponseFactory|JsonResponse|Response|object|void
      */
-    public function update(Request $request, Column $column)
+    public function update(Request $request, Project $project, Column $column)
     {
         $validator = Validator::make($request->all(), [
             'column_name' => 'required|string',
-            'protected' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {
             return response($validator->messages(), 200);
         }
 
-        if ($request->protected){
+        if ($column->protected){
             return response()->setStatusCode(200, 'This Column is protected');//no such validation rule
         }
 
@@ -94,5 +95,19 @@ class ColumnController extends Controller
     public function destroy($id)
     {
         //ask question to mentor
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Column $column
+     * @return JsonResponse|Response|object
+     */
+    public static function show_out($id)
+    {
+        $columns = Column::where('project_id', $id)->get();
+        //$tasks = TaskController::show_out();
+        return $columns;
+        //need to upgrade response with tasks
     }
 }

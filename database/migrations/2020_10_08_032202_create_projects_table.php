@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateColumnTable extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateColumnTable extends Migration
      */
     public function up()
     {
-        Schema::create('columns', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade'); //waits for projects
-            $table->string('protected')->nullable()->default(false);
             $table->string('name');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateColumnTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('column');
+        Schema::dropIfExists('project');
     }
 }

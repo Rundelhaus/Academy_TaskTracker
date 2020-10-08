@@ -33,8 +33,10 @@ Route::prefix('/projects')->group(function () {
         Route::delete('/','ProjectController@destroy');
         Route::prefix('/column')->group(function () {
             Route::post('/', 'ColumnController@store');
-            Route::patch('/{column}','ColumnController@update');
-            Route::delete('/{column}', 'ColumnController@destroy');
+            Route::prefix('/{column}')->group(function () {
+                Route::patch('/', 'ColumnController@update');
+                Route::delete('/', 'ColumnController@destroy');
+            });
         });
         Route::prefix('/tasks')->group(function () {
             Route::get('', 'TaskController@index');

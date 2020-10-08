@@ -51,7 +51,7 @@ class ProjectController extends Controller
         ]);
 
         $prot_column = Column::create([
-            'name' => 'Выполнено',
+            'name' => ('Test'),
             'project_id' => $project->id,
             'protected' => true
         ]);
@@ -66,7 +66,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return response()->json($project)->setStatusCode(200, 'Successful current task list output');
+        //dd($project);
+        //$columns = Column::where('project_id', $project->id)->get();
+        $columns = ColumnController::show_out($project->id);
+        return response()->json([$project, $columns], 204)->setStatusCode(200, 'Successful current task list output');
         //need to upgrade response with columns
     }
 

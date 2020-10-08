@@ -143,6 +143,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Task $task
      * @return Response
      * @throws \Exception
      */
@@ -151,5 +152,12 @@ class TaskController extends Controller
         if($task->delete()) {
             return response('Task successfully deleted', 200);
         }
+
+    }
+
+
+    public static function show_out($id){
+        $tasks = Task::where('column_id', $id)->get();
+        return $tasks;
     }
 }

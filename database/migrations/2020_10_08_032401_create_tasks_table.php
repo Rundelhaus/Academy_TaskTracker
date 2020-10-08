@@ -15,6 +15,7 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('column_id');
             $table->foreign('column_id')->references('id')->on('columns')->onDelete('cascade'); //waits for projects
             $table->string('task_name', 30);
             $table->boolean('urgency')->nullable()->default(false);
