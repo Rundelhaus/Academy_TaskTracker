@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Column;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
@@ -80,7 +81,7 @@ class ColumnController extends Controller
             return response()->setStatusCode(200, 'This Column is protected');//no such validation rule
         }
 
-        $column = Column::update([
+        $column = Column::query()->update([
             'name' => $request->column_name,
         ]);
         return response()->json($column)->setStatusCode(200, 'Successful task list creation');
@@ -105,9 +106,15 @@ class ColumnController extends Controller
      */
     public static function show_out($id)
     {
+        /** @var Column $columns */
         $columns = Column::where('project_id', $id)->get();
-        //$tasks = TaskController::show_out();
+        $columns_id = $columns->pluck('id');
+        $tasks = collect(null);
+        foreach ($columns_id as $id) {
+            /** @var Task $tasks */
+            $tasks->push(TaskController::show_out($id));
+        }
+        $columns->push($tasks);
         return $columns;
-        //need to upgrade response with tasks
     }
 }
