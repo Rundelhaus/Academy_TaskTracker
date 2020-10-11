@@ -33,7 +33,7 @@ Route::prefix('/projects')->group(function () {
         Route::delete('/','ProjectController@destroy');
         Route::prefix('/column')->group(function () {
             Route::post('/', 'ColumnController@store');
-            Route::prefix('/{column}')->group(function () {
+            Route::group(['prefix' => '/{column}'], function () {
                 Route::patch('/', 'ColumnController@update');
                 Route::delete('/', 'ColumnController@destroy');
             });

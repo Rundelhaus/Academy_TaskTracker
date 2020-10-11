@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Column;
 use App\Models\Task;
 use App\Models\Project;
 use Illuminate\Support\Facades\Validator;
@@ -39,14 +40,14 @@ class TaskController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
+            'column_id' => 'required|integer|exists:columns,id',
             'description' => 'string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
             'finish_date' => 'nullable|date',
             'finish_time' => 'nullable|date',
-            'responsible' => 'required|string',
-            'executors' => 'required|string',
-            'column' => 'required|string',
+            'responsible' => 'nullable|integer',//fix when users come
+            'number_of_executors' => 'nullable|integer|max:6',//fix when users come
             'attachment_1' => 'nullable|string',
             'attachment_2' => 'nullable|string',
             'attachment_3' => 'nullable|string',
@@ -60,6 +61,8 @@ class TaskController extends Controller
         /**
          * @var Task $task
          */
+        $idd = 4;//$column->id
+        //dd($column);
         $task = Task::create([
             'task_name' => $request->task_name,
             'description' => $request->description,
@@ -68,12 +71,12 @@ class TaskController extends Controller
             'finish_date' => $request->finish_date,
             'finish_time' => $request->finish_time,
             'responsible' => $request->responsible,
-            'executors' => $request->executors,
-            'column' => $request->column,
+            'number_of_executors' => $request->number_of_executors,
             'attachment_1' => $request->attachment_1,
             'attachment_2' => $request->attachment_2,
             'attachment_3' => $request->attachment_3,
-            'link' => $request->link
+            'link' => $request->link,
+            'column_id' => $request->column_id
         ]);
         return response()->json($task)->setStatusCode(200, 'Successful task creation');
     }
@@ -103,14 +106,14 @@ class TaskController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
-            'description' => 'nullable|string|max:2046',
+            'column_id' => 'required|integer|exists:columns, id',
+            'description' => 'string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
             'finish_date' => 'nullable|date',
             'finish_time' => 'nullable|date',
-            'responsible' => 'required|string',
-            'executors' => 'required|string',
-            'column' => 'required|string',
+            'responsible' => 'nullable|integer',//fix when users come
+            'number_of_executors' => 'nullable|integer|max:6',//fix when users come
             'attachment_1' => 'nullable|string',
             'attachment_2' => 'nullable|string',
             'attachment_3' => 'nullable|string',
@@ -130,7 +133,7 @@ class TaskController extends Controller
             'finish_time' => $request->finish_time,
             'responsible' => $request->responsible,
             'executors' => $request->executors,
-            'column' => $request->column,
+            'column_id' => $request->column_id,
             'attachment_1' => $request->attachment_1,
             'attachment_2' => $request->attachment_2,
             'attachment_3' => $request->attachment_3,

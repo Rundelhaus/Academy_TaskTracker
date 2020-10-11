@@ -24,7 +24,7 @@ class CreateTasksTable extends Migration
             $table->date('finish_date')->nullable();
             $table->dateTime('finish_time')->nullable();
             $table->integer('responsible');//need to add users
-            $table->integer('number_of_executors');//need to add users, max value 6
+            $table->integer('number_of_executors')->nullable();//need to add users, max value 6
             $table->string('attachment_1')->nullable();//need to add attachments
             $table->string('attachment_2')->nullable();//need to add attachments
             $table->string('attachment_3')->nullable();//need to add attachments

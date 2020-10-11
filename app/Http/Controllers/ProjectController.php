@@ -51,11 +51,11 @@ class ProjectController extends Controller
         ]);
 
         $prot_column = Column::create([
-            'name' => ('Test'),
+            'name' => ('Done'),
             'project_id' => $project->id,
             'protected' => true
         ]);
-        return response()->json($project, $prot_column)->setStatusCode(200, 'Successful task list creation');
+        return response()->json(['status' => 'Project successfully created', 'data' => [$project, $prot_column]], 200)->setStatusCode(200, 'Successful task list creation');
     }
 
     /**
@@ -66,11 +66,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //dd($project);
-        //$columns = Column::where('project_id', $project->id)->get();
         $columns = ColumnController::show_out($project->id);
-        return response()->json([$project, $columns], 204)->setStatusCode(200, 'Successful current task list output');
-        //need to upgrade response with columns
+        return response()->json(['status' => 'Successful project extraction', 'data' => [$project, $columns]], 200)->setStatusCode(200, 'Successful project extraction');
     }
 
     /**
@@ -98,7 +95,7 @@ class ProjectController extends Controller
             'name' => $request->project_name,
             'project_descr' => $request->project_description
             ]);
-        return response()->json($project)->setStatusCode(200,'Successful task list update');
+        return response()->json($project)->setStatusCode(200,'Successful task list update');// json_encode
     }
 
     /**
