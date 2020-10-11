@@ -9,4 +9,3 @@ Requires:
     PostgreSQL 12.2
     nginx 1.18
     nginx-unit
-
