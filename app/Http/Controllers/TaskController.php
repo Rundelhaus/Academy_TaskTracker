@@ -40,14 +40,14 @@ class TaskController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
-            'column_id' => 'required|integer|exists:columns, id',
+            'column_id' => 'required|integer|exists:columns,id',
             'description' => 'string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
             'finish_date' => 'nullable|date',
             'finish_time' => 'nullable|date',
-            'responsible' => 'required|integer',
-            'number_of_executors' => 'integer|max:6',
+            'responsible' => 'nullable|integer',//fix when users come
+            'number_of_executors' => 'nullable|integer|max:6',//fix when users come
             'attachment_1' => 'nullable|string',
             'attachment_2' => 'nullable|string',
             'attachment_3' => 'nullable|string',
@@ -112,8 +112,8 @@ class TaskController extends Controller
             'start_date' => 'nullable|date',
             'finish_date' => 'nullable|date',
             'finish_time' => 'nullable|date',
-            'responsible' => 'required|integer',
-            'number_of_executors' => 'integer|max:6',
+            'responsible' => 'nullable|integer',//fix when users come
+            'number_of_executors' => 'nullable|integer|max:6',//fix when users come
             'attachment_1' => 'nullable|string',
             'attachment_2' => 'nullable|string',
             'attachment_3' => 'nullable|string',
