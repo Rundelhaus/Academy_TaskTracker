@@ -31,16 +31,16 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @param Column $column
      * @return Application|ResponseFactory|JsonResponse|Response
      */
-    public function store(Request $request, Project $project, Column $column)
+    public function store(Request $request)
     {
         /**
          * @var Validator $validator
          */
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
+            'column_id' => 'required|integer|exists:columns, id',
             'description' => 'string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
@@ -76,7 +76,7 @@ class TaskController extends Controller
             'attachment_2' => $request->attachment_2,
             'attachment_3' => $request->attachment_3,
             'link' => $request->link,
-            'column_id' => $column->id,
+            'column_id' => $request->column_id
         ]);
         return response()->json($task)->setStatusCode(200, 'Successful task creation');
     }
@@ -106,6 +106,7 @@ class TaskController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
+            'column_id' => 'required|integer|exists:columns, id',
             'description' => 'string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
@@ -132,7 +133,7 @@ class TaskController extends Controller
             'finish_time' => $request->finish_time,
             'responsible' => $request->responsible,
             'executors' => $request->executors,
-            'column' => $request->column,
+            'column_id' => $request->column_id,
             'attachment_1' => $request->attachment_1,
             'attachment_2' => $request->attachment_2,
             'attachment_3' => $request->attachment_3,

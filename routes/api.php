@@ -36,15 +36,15 @@ Route::prefix('/projects')->group(function () {
             Route::group(['prefix' => '/{column}'], function () {
                 Route::patch('/', 'ColumnController@update');
                 Route::delete('/', 'ColumnController@destroy');
-                Route::prefix('/tasks')->group(function () {
-                    Route::get('', 'TaskController@index');
-                    Route::post('/', 'TaskController@store');
-                    Route::prefix('/{task}')->group(function () {
-                        Route::get('', 'TaskController@show');
-                        Route::patch('/', 'TaskController@update');
-                        Route::delete('/', 'TaskController@destroy');
-                    });
-                });
+            });
+        });
+        Route::prefix('/tasks')->group(function () {
+            Route::get('', 'TaskController@index');
+            Route::post('/', 'TaskController@store');
+            Route::prefix('/{task}')->group(function () {
+                Route::get('', 'TaskController@show');
+                Route::patch('/', 'TaskController@update');
+                Route::delete('/', 'TaskController@destroy');
             });
         });
     });

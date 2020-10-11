@@ -90,12 +90,15 @@ class ColumnController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Column $column
      * @return Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Column $column)
     {
-        //ask question to mentor
+        if($column->delete()) {
+            return response('Task successfully deleted', 200);
+        }
     }
 
     /**

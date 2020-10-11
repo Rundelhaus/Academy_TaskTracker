@@ -51,11 +51,11 @@ class ProjectController extends Controller
         ]);
 
         $prot_column = Column::create([
-            'name' => ('Test'),
+            'name' => ('Done'),
             'project_id' => $project->id,
             'protected' => true
         ]);
-        return response()->json($project, $prot_column)->setStatusCode(200, 'Successful task list creation');
+        return response()->json(['status' => 'Project successfully created', 'data' => [$project, $prot_column]], 200)->setStatusCode(200, 'Successful task list creation');
     }
 
     /**
