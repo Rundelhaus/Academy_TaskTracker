@@ -29,9 +29,10 @@ class ColumnController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param $project_id
      * @return JsonResponse|Response|object
      */
-    public function store(Request $request, $project_id)
+    public function store(Request $request, $project_id)//fix later
     {
         $validator = Validator::make($request->all(), [
             'column_name' => 'required|string',

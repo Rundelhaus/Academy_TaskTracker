@@ -41,7 +41,7 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
             'column_id' => 'required|integer|exists:columns,id',
-            'description' => 'string|max:2046',
+            'description' => 'nullable|string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
             'finish_date' => 'nullable|date',
@@ -106,8 +106,8 @@ class TaskController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'task_name' => 'required|string|max:30',
-            'column_id' => 'required|integer|exists:columns, id',
-            'description' => 'string|max:2046',
+            'column_id' => 'required|integer|exists:columns,id',
+            'description' => 'nullable|string|max:2046',
             'urgency' => 'nullable|boolean',
             'start_date' => 'nullable|date',
             'finish_date' => 'nullable|date',

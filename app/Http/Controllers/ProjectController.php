@@ -34,7 +34,7 @@ class ProjectController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'project_name' => 'required|string',
-            'project_description' => 'string'
+            //'project_description' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -47,15 +47,27 @@ class ProjectController extends Controller
          */
         $project = Project::create([
             'name' => $request->project_name,
-            'project_descr' => $request->project_description
+            //'project_descr' => $request->project_description
         ]);
 
-        $prot_column = Column::create([
+        $prot_column1 = Column::create([
             'name' => ('Done'),
             'project_id' => $project->id,
             'protected' => true
         ]);
-        return response()->json(['status' => 'Project successfully created', 'data' => [$project, $prot_column]], 200)->setStatusCode(200, 'Successful task list creation');
+
+        $prot_column2 = Column::create([
+            'name' => ('To Do'),
+            'project_id' => $project->id,
+            'protected' => false
+        ]);
+
+        $prot_column3 = Column::create([
+            'name' => ('Work in progress'),
+            'project_id' => $project->id,
+            'protected' => false
+        ]);
+        return response()->json(['status' => 'Project successfully created', 'data' => [$project, $prot_column1, $prot_column2, $prot_column3]], 200)->setStatusCode(200, 'Successful task list creation');
     }
 
     /**
@@ -84,7 +96,7 @@ class ProjectController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'project_name' => 'required|string',
-            'project_descr' => 'string'
+            //'project_descr' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -93,7 +105,7 @@ class ProjectController extends Controller
 
         $project->update([
             'name' => $request->project_name,
-            'project_descr' => $request->project_description
+            //'project_descr' => $request->project_description
             ]);
         return response()->json($project)->setStatusCode(200,'Successful task list update');// json_encode
     }
